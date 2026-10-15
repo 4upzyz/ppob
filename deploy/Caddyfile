@@ -1,0 +1,5 @@
+# /etc/caddy/Caddyfile  (ganti domain; DNS A record domain harus mengarah ke IP publik VPS)
+ppob.domainmu.com {
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}

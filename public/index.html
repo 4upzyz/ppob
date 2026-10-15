@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keypedia - Top Up Game & Voucher Murah, Aman, 24 Jam</title>
+<style>
+:root{
+  --bg:#141416; --header:#1a1a1d; --card:#202023; --card2:#2c2c30; --border:#2e2e33;
+  --text:#f3f3f5; --muted:#a4a4ae; --accent:#f57c1f; --accent2:#ffb020; --blue:#3aa0ff;
+  --primary:#6c4cf1; --primary2:#9b6bff;
+}
+:root[data-theme="light"]{
+  --bg:#f3f4f8; --header:#ffffff; --card:#ffffff; --card2:#eceef4; --border:#e1e4ee;
+  --text:#171a26; --muted:#6a7188;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.45;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;color:inherit}
+svg{display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+
+/* ===== header ===== */
+header{position:sticky;top:0;z-index:40;background:var(--header);border-bottom:1px solid var(--border)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
+.logo{font-style:italic;font-weight:900;font-size:25px;letter-spacing:.5px;text-transform:uppercase;
+  background:linear-gradient(90deg,#fff,#cfc6ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-stroke:.5px rgba(255,255,255,.2)}
+:root[data-theme="light"] .logo{background:linear-gradient(90deg,#161a2e,var(--primary));-webkit-background-clip:text;background-clip:text}
+.nav-right{display:flex;align-items:center;gap:8px}
+.round{height:42px;min-width:42px;border-radius:999px;border:1px solid var(--border);background:var(--header);display:grid;place-items:center;cursor:pointer}
+.round:hover{border-color:var(--accent)}
+.lang{display:flex;align-items:center;gap:8px;padding:0 14px 0 8px;font-weight:600;font-size:14px;cursor:pointer}
+.flag{width:26px;height:26px;border-radius:50%;background:linear-gradient(#e11d2e 50%,#fff 50%);display:block}
+
+/* search bar */
+.sbar{display:none;border-top:1px solid var(--border);padding:12px 0;position:relative}
+.sbar.open{display:block}
+.sfield{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:0 14px;height:46px}
+.sfield:focus-within{border-color:var(--accent)}
+.sfield input{flex:1;background:transparent;border:0;outline:0;color:var(--text);font-size:15px;height:100%}
+.sfield svg{color:var(--muted);flex:none}
+.sres{margin-top:8px;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:none}
+.sres.show{display:block}
+.sres .r{display:flex;align-items:center;gap:12px;padding:10px 14px;cursor:pointer}
+.sres .r:hover{background:var(--card2)}
+.sres .t{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px;flex:none}
+.sres b{font-size:14px;display:block}
+.sres small{color:var(--muted);font-size:12px}
+.sres .none{padding:18px;text-align:center;color:var(--muted);font-size:14px}
+
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.2s;z-index:50}
+.overlay.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,82vw);background:var(--header);border-left:1px solid var(--border);transform:translateX(100%);transition:.25s;z-index:60;padding:20px;display:flex;flex-direction:column;gap:6px}
+.drawer.show{transform:none}
+.drawer h6{font-size:12px;letter-spacing:.1em;color:var(--muted);margin:10px 0 4px}
+.drawer a,.drawer button.mi{display:flex;align-items:center;justify-content:space-between;padding:12px 6px;border-bottom:1px solid var(--border);font-size:15px;background:none;border-left:0;border-right:0;border-top:0;text-align:left;cursor:pointer;width:100%}
+
+/* ===== banner carousel ===== */
+.carousel{margin-top:18px;position:relative}
+.track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;scrollbar-width:none;border-radius:22px}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;border-radius:22px;padding:22px 16px 16px;color:#fff;text-align:center;position:relative;overflow:hidden;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+.slide.a{background:radial-gradient(circle at 20% 20%,#ffd36b,transparent 45%),radial-gradient(circle at 85% 80%,#ff6a3d,transparent 50%),linear-gradient(120deg,#f9a11b,#e8571f)}
+.slide.b{background:radial-gradient(circle at 80% 20%,#7de3ff,transparent 45%),linear-gradient(120deg,#5b3df5,#8a5cff)}
+.slide.c{background:radial-gradient(circle at 20% 80%,#8cffc4,transparent 45%),linear-gradient(120deg,#0ea5a0,#2563eb)}
+.slide h2{font-size:clamp(24px,6vw,38px);font-weight:900;text-transform:uppercase;line-height:1.05;text-shadow:0 3px 0 rgba(0,0,0,.28);letter-spacing:.5px}
+.slide h2 small{display:block;font-size:.62em;letter-spacing:2px}
+.slide .tag{display:inline-block;margin:8px auto 0;background:#111;color:#ffd166;font-weight:800;font-size:12px;padding:4px 12px;border-radius:6px;text-transform:uppercase}
+.codes{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+@media(min-width:640px){.codes{grid-template-columns:repeat(4,1fr)}}
+.code{background:rgba(10,10,20,.78);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 6px;font-size:10px;line-height:1.25}
+.code span{display:block;font-weight:600;opacity:.85}
+.code b{display:block;font-size:14px;color:#ffe066;letter-spacing:.3px}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--card2)}
+.dots i.on{background:var(--accent);width:20px;border-radius:4px}
+
+/* ===== sections ===== */
+section.blk{margin-top:30px}
+h3.sec{font-size:22px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sub{color:var(--text);opacity:.85;font-size:14.5px;margin:6px 0 14px}
+
+/* flash sale */
+.flash{background:var(--card);border-radius:24px;padding:18px 0 18px 16px;margin-top:30px}
+.fs-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-right:16px}
+.bolt{color:var(--accent2);font-size:28px;line-height:1}
+.cd{display:flex;gap:8px}
+.cd span{width:44px;height:44px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-weight:700;font-size:17px}
+.fs-list{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 16px 4px 0;scrollbar-width:none}
+.fs-list::-webkit-scrollbar{display:none}
+.fs{flex:0 0 78%;max-width:300px;scroll-snap-align:start;background:var(--card2);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+@media(min-width:640px){.fs{flex-basis:260px}}
+.fs .top{padding:16px 16px 6px}
+.fs .nm{font-size:17px;font-weight:600;line-height:1.25}
+.fs .gm{font-size:16px;color:var(--text);opacity:.88;margin-top:2px}
+.fs .pr{display:flex;align-items:center;gap:10px;margin-top:12px}
+.fs .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:12px;color:#fff;flex:none}
+.fs .now{font-size:26px;font-weight:800;color:var(--accent);line-height:1.1}
+.fs .old{font-size:14px;color:#ef4444;text-decoration:line-through;font-weight:600}
+.bar{height:11px;border-radius:99px;background:#0d0d0f;margin:12px 16px 0;overflow:hidden}
+:root[data-theme="light"] .bar{background:#d9dce6}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.cnt{text-align:right;font-size:13px;font-weight:600;padding:8px 16px 14px}
+.fs .foot{margin-top:auto;background:rgba(0,0,0,.25);padding:12px 14px;display:flex;justify-content:flex-end;align-items:center;gap:8px}
+:root[data-theme="light"] .fs .foot{background:rgba(0,0,0,.05)}
+.off{background:linear-gradient(#f68a2f,#d9680f);color:#fff;font-weight:700;font-size:14px;padding:8px 12px;border-radius:10px}
+.instan{background:#fff;color:#1a1a1d;border-radius:10px;padding:5px 12px 5px 8px;display:flex;align-items:center;gap:8px;line-height:1.05}
+.instan small{display:block;font-size:10px;font-style:italic;font-weight:600}
+.instan b{font-size:14px;font-weight:800;letter-spacing:.3px}
+
+/* favorit */
+.fav{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px}
+.fav::-webkit-scrollbar{display:none}
+.fvc{flex:0 0 auto;min-width:260px;display:flex;align-items:center;gap:14px;background:var(--card);border-radius:20px;padding:12px 28px 12px 12px;cursor:pointer;border:1px solid var(--border)}
+.fvc:hover{border-color:var(--accent)}
+.fvc .t{width:76px;height:76px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px;flex:none}
+.fvc b{font-size:16px;display:block}
+.fvc span{color:var(--muted);font-size:14px}
+
+/* tabs & grid */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;border:1px solid var(--border);background:var(--card);padding:9px 18px;border-radius:999px;font-size:14px;cursor:pointer}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(5,1fr)}}
+.item{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .15s;cursor:pointer}
+.item:hover{transform:translateY(-3px);border-color:var(--accent)}
+.thumb{aspect-ratio:1/1;display:grid;place-items:center;color:#fff;font-weight:900;font-size:34px;position:relative}
+.badge{position:absolute;top:8px;left:8px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:2px 9px;border-radius:999px}
+.item .info{padding:10px 12px}
+.item .info b{display:block;font-size:14px}
+.item .info small{color:var(--muted);font-size:12px}
+.nores{grid-column:1/-1;text-align:center;color:var(--muted);padding:26px 0}
+
+/* artikel */
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.head-row a{color:var(--accent);font-weight:700;font-size:14px}
+.agrid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:6px}
+@media(min-width:700px){.agrid{grid-template-columns:repeat(3,1fr)}}
+.art{background:var(--card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.art .img{height:130px}
+.art .body{padding:14px}
+.art h4{font-size:15px;margin-bottom:6px}
+.art p{font-size:13px;color:var(--muted)}
+
+/* footer */
+footer{background:var(--header);border-top:1px solid var(--border);margin-top:44px;padding:36px 0 90px}
+.fgrid{display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:800px){.fgrid{grid-template-columns:1.6fr 1fr 1fr 1fr 1fr}}
+footer p.desc{color:var(--muted);font-size:13px;margin:10px 0 14px;max-width:320px}
+footer h5{font-size:14px;margin-bottom:10px}
+footer li{list-style:none;margin:6px 0;font-size:13px;color:var(--muted)}
+footer li:hover{color:var(--accent)}
+.social{display:flex;gap:8px}
+.social span{width:36px;height:36px;border-radius:50%;background:var(--card2);display:grid;place-items:center;font-size:12px;font-weight:700}
+.store{display:inline-block;margin-top:12px;background:#000;border:1px solid #444;color:#fff;border-radius:10px;padding:8px 14px;font-size:12px}
+.copy{text-align:center;color:var(--muted);font-size:12px;margin-top:28px;padding-top:16px;border-top:1px solid var(--border)}
+
+/* chat fab */
+.fab{position:fixed;right:18px;bottom:22px;width:68px;height:68px;border-radius:50%;background:var(--blue);display:grid;place-items:center;box-shadow:0 8px 24px rgba(58,160,255,.45);z-index:30;cursor:pointer;border:0}
+.fab:hover{filter:brightness(1.08)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a class="logo" href="#">Keypedia</a>
+      <div class="nav-right">
+        <button class="round" id="sbtn" aria-label="Cari">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+        <button class="round lang"><span class="flag"></span>ID / IDR</button>
+        <button class="round" id="mbtn" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="sbar" id="sbar">
+      <div class="sfield">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="text" placeholder="Cari game atau voucher" autocomplete="off">
+      </div>
+      <div class="sres" id="sres"></div>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="ov"></div>
+<aside class="drawer" id="drawer">
+  <b style="font-size:18px">Menu</b>
+  <div id="acct"></div>
+  <h6>NAVIGASI</h6>
+  <a href="#flash">Flash Sale <span>›</span></a>
+  <a href="#trending">Trending <span>›</span></a>
+  <a href="#artikel">Artikel <span>›</span></a>
+  <h6>PENGATURAN</h6>
+  <button class="mi" id="theme"><span>Mode terang / gelap</span><span id="ticon">☀️</span></button>
+  <a href="#">Hubungi Kami <span>›</span></a>
+</aside>
+
+<main class="wrap">
+
+  <!-- banner -->
+  <div class="carousel">
+    <div class="track" id="track">
+      <div class="slide a">
+        <div>
+          <h2><small>Keypedia</small>Top Up Festival</h2>
+          <span class="tag">Top up hemat, harga spesial member!</span>
+        </div>
+        <div class="codes">
+          <div class="code"><span>KODE PROMO</span><b>KEYHEMAT</b>DISKON 10.000<br>10 OKTOBER 2026</div>
+          <div class="code"><span>KODE PROMO</span><b>KEYFASE1</b>DISKON 10% OFF<br>16 OKTOBER 2026</div>
+          <div class="code"><span>KODE PROMO</span><b>KEYFASE2</b>DISKON 10% OFF<br>23 OKTOBER 2026</div>
+          <div class="code"><span>KODE PROMO</span><b>KEYFASE3</b>DISKON 10% OFF<br>30 OKTOBER 2026</div>
+        </div>
+      </div>
+      <div class="slide b">
+        <div>
+          <h2><small>Promo Member</small>Cashback Voucher</h2>
+          <span class="tag">Belanja voucher, dapat saldo kembali</span>
+        </div>
+        <div class="codes">
+          <div class="code"><span>KODE PROMO</span><b>VCHR5</b>CASHBACK 5%</div>
+          <div class="code"><span>KODE PROMO</span><b>VCHR10</b>CASHBACK 10%</div>
+        </div>
+      </div>
+      <div class="slide c">
+        <div>
+          <h2><small>Akhir Pekan</small>Diamond Murah</h2>
+          <span class="tag">Berlaku Sabtu &amp; Minggu</span>
+        </div>
+        <div class="codes">
+          <div class="code"><span>KODE PROMO</span><b>WEEKEND</b>DISKON 8% OFF</div>
+        </div>
+      </div>
+    </div>
+    <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
+  </div>
+
+  <!-- flash sale -->
+  <section class="flash" id="flash">
+    <div class="fs-head">
+      <span class="bolt">⚡</span>
+      <h3 class="sec" style="gap:0">Flash Sale</h3>
+      <div class="cd" id="cd" aria-label="Sisa waktu"><span>00</span><span>00</span><span>00</span><span>00</span></div>
+    </div>
+    <p class="sub" style="margin:8px 0 12px;padding-right:16px">Pesan sekarang! Persediaan terbatas.</p>
+    <div class="fs-list" id="fslist"></div>
+  </section>
+
+  <!-- favorit -->
+  <section class="blk">
+    <h3 class="sec"><span>✨</span> Favorit</h3>
+    <p class="sub">Berikut adalah beberapa produk yang terakhir kamu beli.</p>
+    <div class="fav" id="fav"></div>
+  </section>
+
+  <!-- trending -->
+  <section class="blk" id="trending">
+    <h3 class="sec"><span>🔥</span> Trending</h3>
+    <p class="sub">Berikut adalah beberapa produk yang paling populer saat ini.</p>
+    <div class="tabs" id="tabs">
+      <button class="tab active">Semua</button>
+      <button class="tab">Game</button>
+      <button class="tab">Voucher</button>
+      <button class="tab">Pulsa</button>
+      <button class="tab">E-Money</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- artikel -->
+  <section class="blk" id="artikel">
+    <div class="head-row">
+      <h3 class="sec">Artikel Terbaru &amp; Berita Game</h3>
+      <a href="#">Lihat Semua Artikel →</a>
+    </div>
+    <p class="sub">Panduan bermain, promo, dan update terbaru dari komunitas gamer.</p>
+    <div class="agrid">
+      <article class="art"><div class="img" style="background:linear-gradient(135deg,#6c4cf1,#4cc9f0)"></div><div class="body"><h4>Tips Hemat Top Up Diamond</h4><p>Cara memilih nominal dan metode bayar agar lebih untung.</p></div></article>
+      <article class="art"><div class="img" style="background:linear-gradient(135deg,#ff7a1a,#ff4d6d)"></div><div class="body"><h4>Update Terbaru Musim Ini</h4><p>Rangkuman fitur dan event yang sedang berlangsung.</p></div></article>
+      <article class="art"><div class="img" style="background:linear-gradient(135deg,#2ec4b6,#3a86ff)"></div><div class="body"><h4>Panduan Pemula Bermain</h4><p>Langkah awal supaya cepat naik level tanpa boros.</p></div></article>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="logo" href="#">Keypedia</a>
+        <p class="desc">Supplier top up game &amp; voucher murah, aman, buka 24 jam dengan channel pembayaran terlengkap.</p>
+        <div class="social"><span>✉</span><span>IG</span><span>TG</span><span>FB</span></div>
+        <a class="store" href="#">▶ Download aplikasi di Google Play</a>
+      </div>
+      <div><h5>Partnership</h5><ul><li>Reseller</li><li>Affiliate</li><li>Career</li></ul></div>
+      <div><h5>Site Map</h5><ul><li>Contact Us</li><li>Reviews</li><li>Terms &amp; Conditions</li><li>Privacy Policy</li></ul></div>
+      <div><h5>Support</h5><ul><li>WhatsApp</li><li>Telegram</li></ul></div>
+      <div><h5>Our Services</h5><ul><li>Web Topup / Jasa</li><li>API / Bot / Validator</li><li>CRM Live Chat</li></ul></div>
+    </div>
+    <p class="copy">© 2026 KEYPEDIA. All rights reserved.</p>
+  </div>
+</footer>
+
+<button class="fab" aria-label="Live chat">
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0b1b2e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.5A8 8 0 1 1 21 12z"/><path d="M9 12h.01M12 12h3"/></svg>
+</button>
+
+<script>
+const $=s=>document.querySelector(s);
+const rp=n=>"Rp "+n.toLocaleString("id-ID");
+
+const products=[
+  ["Arena Legends","Game","#6c4cf1,#9b6bff","AL","HOT"],
+  ["Sky Raiders","Game","#ff7a1a,#ff4d6d","SR","PROMO"],
+  ["Royal Clash","Game","#2ec4b6,#3a86ff","RC",""],
+  ["Pixel Heroes","Game","#f72585,#7209b7","PH","NEW"],
+  ["Voucher Belanja","Voucher","#4361ee,#4cc9f0","VB",""],
+  ["Shadow Strike","Game","#222,#6c4cf1","SS","HOT"],
+  ["Kingdom Rush X","Game","#e9a100,#ff7a1a","KR",""],
+  ["Pulsa & Data","Pulsa","#06d6a0,#118ab2","PD","PROMO"],
+  ["Saldo E-Money","E-Money","#3a86ff,#8338ec","EM",""],
+  ["Cyber Racers","Game","#ef476f,#ffd166","CR","NEW"]
+];
+
+/* ---- grid + tabs ---- */
+let cat="Semua";
+const card=p=>`<div class="item"><div class="thumb" style="background:linear-gradient(135deg,${p[2]})">${p[3]}${p[4]?`<span class="badge">${p[4]}</span>`:""}</div><div class="info"><b>${p[0]}</b><small>${p[1]}</small></div></div>`;
+function renderGrid(){
+  const f=$('#q').value.trim().toLowerCase();
+  const l=products.filter(p=>(cat==="Semua"||p[1]===cat)&&p[0].toLowerCase().includes(f));
+  $('#grid').innerHTML=l.length?l.map(card).join(""):`<div class="nores">Produk tidak ditemukan.</div>`;
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
+  cat=t.textContent.trim();renderGrid();
+}));
+
+/* ---- flash sale ---- */
+const flash=[
+  ["300 Gem Pack - (Limited)","Arena Legends",64099,79000,"#6c4cf1,#9b6bff","AL",1,10,.86],
+  ["200 Crystal - (Limited)","Sky Raiders",48500,60000,"#ff7a1a,#ff4d6d","SR",2,10,.7],
+  ["500 Coin Bundle","Royal Clash",91000,110000,"#2ec4b6,#3a86ff","RC",3,10,.55],
+  ["Voucher 100K","Voucher Belanja",96500,100000,"#4361ee,#4cc9f0","VB",4,10,.4]
+];
+$('#fslist').innerHTML=flash.map(f=>`
+ <div class="fs">
+  <div class="top">
+    <div class="nm">${f[0]}</div><div class="gm">${f[1]}</div>
+    <div class="pr">
+      <div class="ic" style="background:linear-gradient(135deg,${f[4]})">${f[5]}</div>
+      <div><div class="now">${rp(f[2])}</div><div class="old">${rp(f[3])}</div></div>
+    </div>
+  </div>
+  <div class="bar"><i style="width:${f[8]*100}%"></i></div>
+  <div class="cnt">${f[6]} / ${f[7]} purchased</div>
+  <div class="foot">
+    <span class="off">- ${rp(f[3]-f[2])}</span>
+    <span class="instan">
+      <svg width="30" height="26" viewBox="0 0 30 26" fill="none" stroke="#1a1a1d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h14M5 12h12M8 18h10"/><path d="M20 3l7 10-7 10" /></svg>
+      <span><small>Pengiriman</small><b>INSTAN</b></span>
+    </span>
+  </div>
+ </div>`).join("");
+
+/* countdown (hari : jam : menit : detik) */
+const end=Date.now()+((77*86400)+(5*3600)+(3*60)+11)*1000;
+function tick(){
+  let s=Math.max(0,Math.floor((end-Date.now())/1000));
+  const d=Math.floor(s/86400);s%=86400;
+  const h=Math.floor(s/3600);s%=3600;
+  const m=Math.floor(s/60);s%=60;
+  const v=[d,h,m,s].map(x=>String(x).padStart(2,"0"));
+  document.querySelectorAll('#cd span').forEach((el,i)=>el.textContent=v[i]);
+}
+tick();setInterval(tick,1000);
+
+/* ---- favorit ---- */
+const favs=[["Arena Legends","Moonton","#6c4cf1,#9b6bff","AL"],["Sky Raiders","Studio Langit","#ff7a1a,#ff4d6d","SR"],["Royal Clash","Kerajaan Games","#2ec4b6,#3a86ff","RC"]];
+$('#fav').innerHTML=favs.map(f=>`<div class="fvc"><div class="t" style="background:linear-gradient(135deg,${f[2]})">${f[3]}</div><div><b>${f[0]}</b><span>${f[1]}</span></div></div>`).join("");
+
+/* ---- carousel ---- */
+const track=$('#track'),dots=[...document.querySelectorAll('#dots i')];
+track.addEventListener('scroll',()=>{
+  const i=Math.round(track.scrollLeft/track.clientWidth);
+  dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+});
+let cur=0;
+setInterval(()=>{cur=(cur+1)%dots.length;track.scrollTo({left:cur*track.clientWidth,behavior:'smooth'})},5000);
+
+/* ---- search ---- */
+const sbar=$('#sbar'),q=$('#q'),sres=$('#sres');
+$('#sbtn').onclick=()=>{sbar.classList.toggle('open');if(sbar.classList.contains('open'))q.focus()};
+function showRes(){
+  const f=q.value.trim().toLowerCase();
+  renderGrid();
+  if(!f){sres.classList.remove('show');return}
+  const l=products.filter(p=>p[0].toLowerCase().includes(f)).slice(0,6);
+  sres.innerHTML=l.length?l.map(p=>`<div class="r" data-n="${p[0]}"><div class="t" style="background:linear-gradient(135deg,${p[2]})">${p[3]}</div><div><b>${p[0]}</b><small>${p[1]}</small></div></div>`).join(""):`<div class="none">Tidak ada hasil untuk "${q.value}"</div>`;
+  sres.classList.add('show');
+}
+q.addEventListener('input',showRes);
+sres.addEventListener('click',e=>{const r=e.target.closest('.r');if(r){q.value=r.dataset.n;sres.classList.remove('show');renderGrid();$('#trending').scrollIntoView({behavior:'smooth'})}});
+
+/* ---- drawer + theme ---- */
+const dr=$('#drawer'),ov=$('#ov');
+const openD=()=>{dr.classList.add('show');ov.classList.add('show')},closeD=()=>{dr.classList.remove('show');ov.classList.remove('show')};
+$('#mbtn').onclick=openD;ov.onclick=closeD;
+dr.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeD));
+$('#theme').onclick=()=>{
+  const r=document.documentElement,light=r.dataset.theme==='light';
+  r.dataset.theme=light?'dark':'light';$('#ticon').textContent=light?'☀️':'🌙';
+};
+
+renderGrid();
+</script>
+<script src="app.js"></script>
+</body>
+</html>

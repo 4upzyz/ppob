@@ -1,0 +1,19 @@
+<!doctype html><html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin PPOB</title>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:20px auto;padding:0 16px;background:#141416;color:#f3f3f5}
+button{padding:8px 12px;border:0;border-radius:8px;background:#f57c1f;color:#fff;font-weight:700;cursor:pointer}
+.r{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2e2e33}small{color:#a4a4ae}</style>
+<h2>Panel Admin</h2><p>Saldo Digiflazz: <b id="s">...</b> <button id="sy">Sync Produk</button> <span id="o"></span></p>
+<h3>Deposit menunggu</h3><div id="l"></div><p><a href="/" style="color:#ffb020">← Kembali</a> (login admin dulu di halaman utama)</p>
+<script>
+const j=(u,m)=>fetch(u,{method:m||'GET'}).then(r=>r.json());
+const idr=n=>'Rp '+Number(n).toLocaleString('id-ID');
+async function load(){
+  const d=await j('/api/admin/deposits'); if(d.error){document.body.insertAdjacentHTML('beforeend','<p>'+d.error+'</p>');return}
+  l.innerHTML=d.map(x=>`<div class="r"><div>${x.email}<br><small>Transfer ${idr(x.amount+x.code)} (kode ${x.code})</small></div><button onclick="ap(${x.id})">Konfirmasi ${idr(x.amount)}</button></div>`).join('')||'<small>Tidak ada.</small>';
+  j('/api/admin/saldo').then(r=>s.textContent=r.deposit!=null?idr(r.deposit):'-');
+}
+async function ap(id){if(confirm('Pastikan uang sudah masuk. Lanjut?')){await j('/api/admin/deposits/'+id+'/approve','POST');load()}}
+sy.onclick=async()=>{o.textContent='...';const r=await j('/api/admin/sync','POST');o.textContent=r.error||r.count+' produk'};
+load();
+</script></html>
